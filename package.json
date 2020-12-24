@@ -21,7 +21,9 @@
     "build": "npm-run-all -s clean:dist build:dist build:bundle",
     "dev": "npm-run-all watch test:watch",
     "prod": "npm-run-all clean test:coverage build",
-    "lint": "eslint \"src/**/*.ts\" --quiet --fix"
+    "lint": "eslint \"src/**/*.{js,ts}\" --quiet",
+    "lint:fix": "npm run eslint -- --fix",
+    "prettier": "prettier --write"
   },
   "keywords": [
     "netscape",
@@ -61,7 +63,9 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-prettier": "^3.3.0",
+    "husky": "^4.3.6",
     "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
