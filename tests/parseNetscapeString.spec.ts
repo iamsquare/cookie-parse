@@ -1,9 +1,10 @@
 import { promises as fs } from 'fs';
-import path from 'path';
+import * as path from 'path';
 
-import { parseCookieFile } from '..';
+import { parseNetscapeString } from '../src';
+import { ParsedCookie } from '../src/interfaces';
 
-const singleLineEquality = [
+const singleLineEquality: ParsedCookie[] = [
   {
     name: 'key1',
     value: 'value1',
@@ -16,7 +17,7 @@ const singleLineEquality = [
   }
 ];
 
-const multipleLineEquality = [
+const multipleLineEquality: ParsedCookie[] = [
   {
     name: 'key1',
     value: 'value1',
@@ -53,19 +54,19 @@ describe('Single Line Files', () => {
   test('Without Header', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withoutHeaderSingleLine'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(singleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(singleLineEquality);
   });
 
   test('With Header', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withHeaderSingleLine'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(singleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(singleLineEquality);
   });
 
   test('With Trim', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withTrimSingleLine'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(singleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(singleLineEquality);
   });
 });
 
@@ -73,18 +74,18 @@ describe('Multiple Line Files', () => {
   test('Without Header', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withoutHeaderMultipleLines'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(multipleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(multipleLineEquality);
   });
 
   test('With Header', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withHeaderMultipleLines'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(multipleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(multipleLineEquality);
   });
 
   test('With Trim', async () => {
     const file = await fs.readFile(path.resolve(__dirname, './testFiles/withTrimMultipleLine'));
 
-    expect(parseCookieFile(file.toString())).toStrictEqual(multipleLineEquality);
+    expect(parseNetscapeString(file.toString())).toStrictEqual(multipleLineEquality);
   });
 });

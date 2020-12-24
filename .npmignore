@@ -1,10 +1,18 @@
-dist
 node_modules
-coverage
-types
+tests
 docs
+src
 temp
 
+.browserslistrc
+.npmignore
+tsconfig.json
+tsconfig.d.json
+jest.config.js
+.editorconfig
+rollup.config.js
+
+.vscode/*
 logs
 *.log
 npm-debug.log*
