@@ -83,5 +83,11 @@
     "ramda-adjunct": "^2.29.0",
     "ramda-extension": "^0.10.3",
     "regenerator-runtime": "^0.13.7"
+  },
+  "directories": {
+    "lib": "dist"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
