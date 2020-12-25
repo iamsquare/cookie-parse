@@ -3,7 +3,7 @@ on:
     tags:
       - 'v*'
 
-name: Generate Documentation
+name: Generate documentation
 jobs:
   build:
     runs-on: ubuntu-latest

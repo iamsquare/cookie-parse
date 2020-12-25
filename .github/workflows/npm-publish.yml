@@ -1,0 +1,27 @@
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: Publish node.js package
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+
+      - name: 'Test and build library'
+        run: |
+          npm ci
+          npm run prod
+
+      - name: 'Publish package'
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -3,6 +3,7 @@ tests
 docs
 src
 temp
+coverage
 
 .browserslistrc
 .npmignore
@@ -10,8 +11,17 @@ tsconfig.json
 tsconfig.d.json
 jest.config.js
 .editorconfig
+typedoc.json
 rollup.config.js
+.babelrc
+.eslintignore
+.eslintrc
+.huskyrc
+.lintstagedrc
+.prettierignore
+.prettierrc
 
+.github/*
 .vscode/*
 logs
 *.log
