@@ -10,8 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "removeComments": true,
-    "noImplicitAny": true,
-    "allowJs": true
+    "noImplicitAny": true
   },
   "exclude": ["node_modules/**/*", "dist/**/*", "tests/**/*"]
 }
