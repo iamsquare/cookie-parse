@@ -1,0 +1,128 @@
+on:
+  push:
+    tags:
+      - "v*"
+
+name: Generic workflow
+jobs:
+  build:
+    name: Build library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: Setup node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Run tests
+        run: |
+          npm ci
+          npm run prod
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-${{ env.GITHUB_REF_SLUG }}
+          path: ./dist
+          retention-days: 1
+
+  release:
+    name: Create github release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-${{ env.GITHUB_REF_SLUG }}
+          path: dist
+
+      - name: Zip repository
+        run: |
+          zip -r "cookie-parse-${{ env.GITHUB_REF_SLUG }}" . -x '*.git*'
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GITHUB_REF_SLUG }}
+          release_name: Release ${{ env.GITHUB_REF_SLUG }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./cookie-parse-${{ env.GITHUB_REF_SLUG }}.zip
+          asset_name: cookie-parse-${{ env.GITHUB_REF_SLUG }}.zip
+          asset_content_type: application/zip
+
+  publish:
+    name: Publish npm package
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-${{ env.GITHUB_REF_SLUG }}
+          path: dist
+
+      - name: Setup node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+
+      - name: 'Publish package'
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  documentation:
+    name: Publish library documentation
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Generate Documentation
+        run: |
+          npm ci
+          npm run docs
+
+      - name: Publish Documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          cname: www.iamsquare.it
+          force_orphan: true
