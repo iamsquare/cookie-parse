@@ -51,7 +51,7 @@ jobs:
 
       - name: Zip repository
         run: |
-          zip -r "cookie-parse-${{ env.GITHUB_REF_SLUG }}" . -x '*.git*'
+          zip -r "cookie-parse-${{ env.GITHUB_REF_SLUG }}.zip" . -x '*.git*'
 
       - name: Create Release
         id: create_release
@@ -82,6 +82,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
 
       - name: Download dist artifact
         uses: actions/download-artifact@v2
