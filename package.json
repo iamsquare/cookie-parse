@@ -25,7 +25,11 @@
     "lint:fix": "npm run eslint -- --fix",
     "prettier": "prettier --write",
     "docs": "npm-run-all clean:docs docs:generate",
-    "docs:generate": "typedoc"
+    "docs:generate": "typedoc",
+    "bump": "node ./bumpVersion.js",
+    "bump:patch": "npm run bump -- --patch",
+    "bump:minor": "npm run bump -- --minor",
+    "bump:major": "npm run bump -- --major"
   },
   "keywords": [
     "netscape",
@@ -59,7 +63,10 @@
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "babel-jest": "^26.6.3",
+    "chalk": "^4.1.0",
     "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
+    "cross-var": "^1.1.0",
     "eslint": "^7.16.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^7.1.0",
@@ -73,6 +80,7 @@
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.35.1",
+    "semver": "^7.3.4",
     "ts-jest": "^26.4.4",
     "typedoc": "^0.19.2",
     "typescript": "^4.1.3"
