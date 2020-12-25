@@ -1,9 +1,9 @@
-name: Generate Documentation
-
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*'
 
+name: Generate Documentation
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,16 +12,15 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm test:coverage
-      - run: npm run docs
 
-  publish-docs:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Generate Documentation
+        run: |
+          npm ci
+          npm test
+          npm run docs
+
+      - name: Publish Documentation
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
