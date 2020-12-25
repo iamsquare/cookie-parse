@@ -1,22 +1,55 @@
 import { map, pipe, split, trim, includes, slice, ifElse, identity, replace, always } from 'ramda';
 import { isNotNil, isTrue, isValidNumber } from 'ramda-adjunct';
-import { ParsedCookie } from './interfaces';
+import { ParsedCookie, SplitStringOptions } from './interfaces';
+import { NameValueTuple, SplitNetscapeString } from './types';
 
+/**
+ * The string #HttpOnly_
+ * @internal
+ */
 const HTTP_ONLY_PREFIX = '#HttpOnly_';
+
+/**
+ * The string TRUE
+ * @internal
+ */
 const TRUE_CONST = 'TRUE';
 
-export const stringIsTrue = (str: string) => str.toUpperCase() === TRUE_CONST;
+/**
+ * Checks if string is equal to 'TRUE'
+ * @internal
+ */
+export function stringIsTrue(str: string): boolean {
+  return str.toUpperCase() === TRUE_CONST;
+}
 
-export const splitString = (separator: string | RegExp, options?: { skipTrim: boolean }) =>
-  pipe<string, string[], string[]>(
+/**
+ * Splits a string with a separator and trims the resulting substrings,
+ * unless the skipTrim option is provided
+ * @internal
+ */
+export function splitString(separator: string | RegExp, options?: SplitStringOptions): (str: string) => string[] {
+  return pipe(
     split(separator),
     ifElse(() => isTrue(options?.skipTrim), identity, map(trim))
   );
+}
 
-export const nameValuePairToCookie = ([name, value]: string[]) =>
-  ({ name, value: ifElse(isNotNil, identity, always(name))(value) } as ParsedCookie);
+/**
+ * Takes a [name, value] pair and maps it to a valid Cookie
+ * @internal
+ */
+export function nameValuePairToCookie(tuple: NameValueTuple): ParsedCookie {
+  const [name, value] = tuple;
+  return { name, value: ifElse(isNotNil, identity, always(name))(value) } as ParsedCookie;
+}
 
-export const arrayToCookie = ([domain, crossDomain, path, https, expires, name, value]: string[]): ParsedCookie => {
+/**
+ * Takes a split netscape string and maps it to a valid Cookie
+ * @internal
+ */
+export function arrayToCookie(array: SplitNetscapeString): ParsedCookie {
+  const [domain, crossDomain, path, https, expires, name, value] = array;
   const httpOnly = includes(HTTP_ONLY_PREFIX, domain);
   const parsedExpires = Number.parseInt(expires, 10);
 
@@ -32,4 +65,4 @@ export const arrayToCookie = ([domain, crossDomain, path, https, expires, name, 
     https: stringIsTrue(https),
     expires: isValidNumber(parsedExpires) ? parsedExpires : 0
   };
-};
+}

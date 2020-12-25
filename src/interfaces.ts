@@ -1,3 +1,6 @@
+/**
+ * ParsedCookie interface
+ */
 export interface ParsedCookie {
   name: string;
   value: string;
@@ -11,4 +14,12 @@ export interface ParsedCookie {
   maxAge?: number;
   sameSite?: string;
   extension?: string[];
+}
+
+/**
+ * SplitString function options interface
+ * @internal
+ */
+export interface SplitStringOptions {
+  skipTrim: boolean;
 }
