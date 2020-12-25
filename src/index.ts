@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export { parseNetscapeString } from './parseNetscapeString';
-export { parseCookieString } from './parseString';
-export * from './interfaces';
+export { parseNetscapeFile, parseNetscapeString } from './parseNetscape';
+export { parseCookieString } from './parseCookie';
+export { ParsedCookie } from './interfaces';

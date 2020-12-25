@@ -2,13 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist/lib",
-    "noImplicitAny": true,
     "sourceMap": false,
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "dom"],
     "target": "esnext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "noImplicitAny": true
   },
   "exclude": ["node_modules/**/*", "dist/**/*", "tests/**/*"]
 }
