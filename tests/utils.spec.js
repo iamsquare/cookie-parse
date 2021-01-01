@@ -7,6 +7,26 @@ describe('splitTrimLine', () => {
   it('Should generate a valid array from a string with extra whitespace', () => {
     expect(splitString('\t')('  a  \tb  \t  c')).toStrictEqual(['a', 'b', 'c']);
   });
+  it('Should generate a valid array from a string with subsequent separators without extra whitespaces inbetween', () => {
+    expect(splitString('\t')('a\t\tb\tc')).toStrictEqual(['a', 'b', 'c']);
+  });
+  it('Should generate a valid array from a string with subsequent separators with extra whitespaces inbetween', () => {
+    expect(splitString('\t')('a  \t  \t   b   \tc     ')).toStrictEqual(['a', 'b', 'c']);
+  });
+  it('Should generate a valid array skipping the trim operation', () => {
+    expect(splitString('\t', { skipTrim: true })('  a  \tb  \t  c')).toStrictEqual(['  a  ', 'b  ', '  c']);
+  });
+  it('Should generate a valid array skipping the filtering operation', () => {
+    expect(splitString('\t', { skipFilter: true })('a  \t  \t   b   \tc     ')).toStrictEqual(['a', '', 'b', 'c']);
+  });
+  it('Should generate a valid array skipping all the extra operations', () => {
+    expect(splitString('\t', { skipTrim: true, skipFilter: true })('a  \t  \t   b   \tc     ')).toStrictEqual([
+      'a  ',
+      '  ',
+      '   b   ',
+      'c     '
+    ]);
+  });
 });
 
 describe('arrayToCookie', () => {

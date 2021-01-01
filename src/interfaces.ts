@@ -21,5 +21,6 @@ export interface ParsedCookie {
  * @internal
  */
 export interface SplitStringOptions {
-  skipTrim: boolean;
+  skipTrim?: boolean;
+  skipFilter?: boolean;
 }

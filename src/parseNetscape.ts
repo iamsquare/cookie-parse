@@ -1,5 +1,5 @@
 import { pipe, ifElse, split, map, filter } from 'ramda';
-import { lengthEq, stubNull } from 'ramda-adjunct';
+import { isNotNilOrEmpty, lengthEq, stubNull } from 'ramda-adjunct';
 
 import { ParsedCookie } from './interfaces';
 import { arrayToCookie, splitString } from './utils';
@@ -32,5 +32,5 @@ export function parseNetscapeString(string: string): ParsedCookie {
  * to a `ParsedCookie` array
  */
 export function parseNetscapeFile(buffer: Buffer): ParsedCookie[] {
-  return pipe(() => buffer.toString(), split('\n'), map(parseNetscapeString), filter(Boolean))();
+  return pipe(() => buffer.toString(), split('\n'), map(parseNetscapeString), filter(isNotNilOrEmpty))();
 }
