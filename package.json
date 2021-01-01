@@ -25,11 +25,7 @@
     "lint:fix": "npm run eslint -- --fix",
     "prettier": "prettier --write",
     "docs": "npm-run-all clean:docs docs:generate",
-    "docs:generate": "typedoc",
-    "bump": "node ./bumpVersion.js",
-    "bump:patch": "npm run bump -- --patch",
-    "bump:minor": "npm run bump -- --minor",
-    "bump:major": "npm run bump -- --major"
+    "docs:generate": "typedoc"
   },
   "keywords": [
     "netscape",

@@ -103,4 +103,23 @@ describe('Parse Set-Cookie String', () => {
     });
     expect(parseSetCookieString('a=b;')).not.toHaveProperty('extension');
   });
+
+  it('Should parse everything at once correctly', () => {
+    expect(
+      parseSetCookieString(
+        'a=b; Domain=.test.dev; Path=/test; Expires=Thu, 17-Apr-2014 02:12:29 UTC; Max-Age=123123; HttpOnly; Secure; SameSite=Strict; c=d; e=f;'
+      )
+    ).toMatchObject({
+      name: 'a',
+      value: 'b',
+      domain: 'test.dev',
+      path: '/test',
+      expires: 1397700749,
+      maxAge: 123123,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      extension: ['c=d', 'e=f']
+    });
+  });
 });

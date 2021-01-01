@@ -37,7 +37,7 @@ npm run prod
 npm run build
 ```
 
-## TODO
+## TODO list
 
 - [x] ~~Documentation~~.
 - [ ] Check edge cases.
