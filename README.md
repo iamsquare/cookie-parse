@@ -40,6 +40,7 @@ npm run build
 ## TODO list
 
 - [x] ~~Documentation~~.
+- [ ] `ParsedCookie` serialization.
 - [ ] Check edge cases.
 - [ ] Add examples.
 - [ ] Migrate tests to typescript when I resolve some issues with typescript and custom jest matchers.

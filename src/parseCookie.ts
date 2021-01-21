@@ -5,7 +5,7 @@ import { ParsedCookie } from './interfaces';
 import { nameValuePairToCookie, splitString } from './utils';
 
 /**
- * Reduces a semicolon separated key=value sequence like:
+ * Deserializes a semicolon separated key=value sequence like:
  *
  * ```
  * 'a=b; c=d; e=f;'
@@ -18,7 +18,7 @@ export function parseCookieString(string: string): ParsedCookie[] {
 }
 
 /**
- * Reduces a set-cookie header string like:
+ * Deserializes a set-cookie header string like:
  *
  * ```
  * 'a=b; Domain=test.dev; Path=/; Secure; SameSite=Lax; Expires=Wed, 09 Jun 2021 10:18:14 GMT;'

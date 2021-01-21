@@ -1,4 +1,4 @@
-import { splitString, nameValuePairToCookie, arrayToCookie } from '../src/utils';
+import { splitString, nameValuePairToCookie, arrayToCookie, cookieToNameValuePair } from '../src/utils';
 
 describe('splitTrimLine', () => {
   it('Should generate a valid array from a string without extra whitespace', () => {
@@ -77,5 +77,16 @@ describe('nameValuePairToCookie', () => {
 
   it('Should generate a valid ParsedCookie from name only', () => {
     expect(nameValuePairToCookie(['a'])).toStrictEqual({ name: 'a', value: 'a' });
+  });
+});
+
+describe('cookieToNameValuePair', () => {
+  it('Should generate a valid name=value pair from a ParsedCookie', () => {
+    expect(cookieToNameValuePair({ name: 'a', value: 'b' })).toStrictEqual('a=b');
+  });
+
+  it('Should generate a name-only cookie from a ParsedCookie', () => {
+    expect(cookieToNameValuePair({ name: 'a', value: 'a' })).toStrictEqual('a');
+    expect(cookieToNameValuePair({ name: 'a' })).toStrictEqual('a');
   });
 });

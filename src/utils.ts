@@ -54,6 +54,14 @@ export function nameValuePairToCookie(tuple: NameValueTuple): ParsedCookie {
 }
 
 /**
+ * Takes a ParsedCookie and maps it to a valid [name, value] pair
+ * @internal
+ */
+export function cookieToNameValuePair(cookie: ParsedCookie): string {
+  return !cookie.value || cookie.name === cookie.value ? cookie.name : `${cookie.name}=${cookie.value}`;
+}
+
+/**
  * Takes a split netscape string and maps it to a valid Cookie
  * @internal
  */
