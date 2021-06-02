@@ -6,6 +6,6 @@
   "readme": "./README.md",
   "hideGenerator": true,
   "excludeExternals": true,
-  "includeVersion": true,
-  "stripInternal": true
+  "excludeInternal": true,
+  "includeVersion": true
 }
