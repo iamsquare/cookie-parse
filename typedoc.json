@@ -1,12 +1,11 @@
 {
-  "inputFiles": ["./src"],
+  "entryPoints": ["./src/index.ts"],
   "out": "docs",
   "tsconfig": "./tsconfig.json",
-  "mode": "file",
   "theme": "minimal",
   "readme": "./README.md",
   "hideGenerator": true,
   "excludeExternals": true,
-  "stripInternal": true,
-  "excludeNotExported": true
+  "includeVersion": true,
+  "stripInternal": true
 }
